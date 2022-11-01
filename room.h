@@ -14,7 +14,7 @@ public:
 	void update(int ,int ,int);
 	void show(int);
 	//bool check(int , int, int);
-	int count(int);
+	int count(string, string);
 };
 
 #endif // !ROOM_H

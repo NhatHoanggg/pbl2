@@ -15,342 +15,161 @@ guest::~guest() {
 
 }
 
+void guest::getInfo(film f,room &x) {
+	cout << "\t\t\tNhap ma phim ban muon xem : -> " ; 
+	cin >> ma;
+	fstream g;
+	string tgbd, id, r, tenphim , s[5], phim; // tgian bat dau - ma - room - ...
 
-// PHIM 1; 
-void guest::getInfo1(int t,room &x) {
-    system("cls");
-    cout << "\t\t" << "Minions: The Rise of Gru" << endl;
-    cout << "\t\t+=============================================================+" << endl;
-    cout << "\t\t|               ** LICH CHIEU TRONG NGAY **                   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << "\t\t|    Gio Bat Dau       |    So Ghe Trong      |    Ma Phong   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << setw(30) <<  "9h" << setw(22) << x.count(1) << setw(20) << "R1" << endl;
-    cout << setw(30) << "18h" << setw(22) << x.count(16) << setw(20) << "R4" << endl;
-    cout << setw(30) << "21h" << setw(22) << x.count(19) << setw(20) << "R3" << endl;
-	cout << "\t\tHo Ten Khach Hang: "; 
+	int d = -1 ;
+
+	g.open("lich.txt");
+
+	cout << "\t\t\t\tLICH CHIEU TRONG NGAY HOM NAY" << endl;
+	cout << "\t\t\t+=============+=======================================+==========+==============+" << endl;
+	cout << "\t\t\t| Gio bat dau |       Ten Phim                        | Ma Phong | So Ghe Trong |" << endl;
+	cout << "\t\t\t+=============+=======================================+==========+==============+" << endl;
+
+	while (!g.eof()) {
+		//d++;
+		getline(g, tgbd, '|');      // thoi gian bat dau
+		getline(g, id, '|');        // ma phim 
+		getline(g, r);              // ma phong
+		tenphim = f.find(id);       
+
+		if (!g.eof() && (ma == id)) {
+			d++;
+			cout << "\t\t\t|" << setw(8) << right << tgbd << setw(6) << "|";  // gio bat dau
+			cout << setw(39) << left << tenphim << "|";   // ten phim
+			cout << setw(7) << right << r << setw(4) << "|" ;  // ma phong 
+			// so ghe trong
+			cout << setw(9) << x.count(tgbd,r) << setw(6) << "|" << endl;
+			s[d] = tgbd + r;
+			phim = tenphim;
+		}
+
+	};
+	cout << "\t\t\t+=============+=======================================+==========+==============+" << endl << endl;
+
+	cout << "\t\t\t\tHo Ten Khach Hang: ";
 	cin.ignore();
 	getline(cin, name);
-    cout << "\t\tSo dien thoai: ";
+	cout << "\t\t\t\tSo dien thoai: ";
 	getline(cin, phone);
-    cout << "\t\tNhap suat xem: "; 
-    getline(cin, time);
-	cout << "\t\tNhap so ve muon mua ";
-    cin >> num;   
-    int n{};
-    if (time == "9h") {
-        n = 1;
-        x.show(1);
-    }
+	cout << "\t\t\t\tNhap suat xem: ";
+	getline(cin, time);
+	cout << "\t\t\t\tNhap so ve muon mua ";
+	cin >> num;
 
-    if (time == "18h") {
-        n = 16;
-        x.show(16);
-    }
-    if (time == "21h") {
-        n = 19;
-        x.show(19);
-    }
-    //x.show(n);
-    for (int i = 0; i < num; i++) {
-        cout << "\t\t\tNhap vi tri cho ngoi thu " << i + 1 << ": ";
+	
+	//x.show(n); 9h1
 
-        if (i == 0) cin.ignore();
-        else fflush(stdin);
-        getline(cin, p[i]);
+	int k, n ;
 
-        p[i][0] = toupper(p[i][0]);
-        h = int(p[i][0]) - 65;
-        c = int(p[i][1]) - 49;
+	for (int i = 0; i <= d; i++) {
+		if (s[i].find("9h") == 0 && time == "9h") {
+			k = 0;
+			n = int(s[i][s[i].length() - 1] - '0');
+		}
+		if (s[i].find("11h") == 0 && time == "11h") {
+			k = 4;
+			n = int(s[i][s[i].length() - 1] - '0');
+		}
+		if (s[i].find("15h") == 0 && time == "15h") {
+			k = 8;
+			n = int(s[i][s[i].length() - 1] - '0');
+		}
+		if (s[i].find("18h") == 0 && time == "18h") {
+			k = 12;
+			n = int(s[i][s[i].length() - 1] - '0');
+		}
+		if (s[i].find("21h") == 0 && time == "21h") {
+			k = 16;
+			n = int(s[i][s[i].length() - 1] - '0');
+		}
+	}
 
-        if (p[i].length() == 3)
-            c = 9;
-        x.update(n, h, c);
+	n = n + k;
+	
+	x.show(n);
+	
 
-    }
-    
-    cout << "\t\t\t -> So tien phai tra : " << 50000 * num << "VND" << endl; 
+	for (int i = 0; i < num; i++) {
+		cout << "\t\t\t\t - Nhap vi tri cho ngoi thu " << i + 1 << ": ";
+
+		if (i == 0) cin.ignore();
+		else fflush(stdin);
+
+		getline(cin, vt[i]);
+		
+		vt[i][0] = toupper(vt[i][0]);
+		
+		h = int(vt[i][0] ) - 65;
+		c = int(vt[i][1] ) - 49;
+
+		if (vt[i].length() == 3)
+			c = 9;
+		x.update(n, h, c);
+
+	}
+	cout << "\n\t\t\t____________________________________________________" << endl << endl;
+	system("pause");
+
+	bill(phim, n);
+	update(phim, n);
+	g.close();
+	
 }
 
-//PHIM2;
-void guest::getInfo2(int t, room &x) {
+void guest::bill(string phim, int n) {
+	
+	system("cls");
+	n = n % 4;
+	if (n == 0)
+		n = 4;
 
-    cout << "\t\t" << "Bong Dung Trung So  " << endl;
-    cout << "\t\t+=============================================================+" << endl;
-    cout << "\t\t|               ** LICH CHIEU TRONG NGAY **                   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << "\t\t|    Gio Bat Dau       |    So Ghe Trong      |    Ma Phong   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << setw(30) << "9h" << setw(22) << x.count(2) << setw(20) << "R2" << endl;
-    cout << setw(30) << "11h" << setw(22) << x.count(5) << setw(20) << "R1" << endl;
-    cout << setw(30) << "21h" << setw(22) << x.count(20) << setw(20) << "R4" << endl;
-    cout << "\t\tHo Ten Khach Hang: ";
-    cin.ignore();
-    getline(cin, name);
-    cout << "\t\tSo dien thoai: ";
-    getline(cin, phone);
-    cout << "\t\tNhap suat xem: ";
-    getline(cin, time);
-    cout << "\t\tNhap so ve muon mua ";
-    cin >> num;
-    int n;
-    if (time == "9h") {
-        n = 1;
-        x.show(2);
-    }
-    if (time == "11h") {
-        n = 2;
-        x.show(5);
-    }
-    if (time == "21h") {
-        n = 3;
-        x.show(20);
-    }
+	cout << "\t\t\t\t+====================================================+" << endl;
+	cout << "\t\t\t\t|                   HOA DON MUA VE                   |" << endl;
+	cout << "\t\t\t\t+====================================================+" << endl;
+	cout << "\t\t\t\t|    Ten Khach hang: " << setw(27) << name << setw(6) << "|" << endl;
+	cout << "\t\t\t\t|    So dien thoai : " << setw(27) << phone << setw(6) << "|" << endl;
+	cout << "\t\t\t\t|    Ten phim : " << setw(32) << phim << setw(6) << "|" << endl;
+	cout << "\t\t\t\t|    Suat xem : " << setw(5) << time << setw(33) << "|" << endl;
+	cout << "\t\t\t\t|    Rap so : " << n << setw(39) << "|" << endl;
+	cout << "\t\t\t\t|    So ve mua : " << num << setw(36) << "|" << endl;
 
-    //x.show(n);
-    for (int i = 0; i < num; i++) {
-        cout << "\t\t\tNhap vi tri cho ngoi thu " << i + 1 << ": ";
+	for (int i = 0; i < num; i++) {
+		cout << "\t\t\t\t| \t- Vi Tri Ngoi Thu " << setw(3) << right << i + 1 << ": " << setw(5) << vt[i] << setw(18) << "|" << endl;
+	}
 
-        if (i == 0) cin.ignore();
-        else fflush(stdin);
-        getline(cin, p[i]);
+	cout << "\t\t\t\t|    -> Thanh Tien : " << setw(10) << num * 50000 << " VND" << setw(19) << "|" << endl;
 
-        p[i][0] = toupper(p[i][0]);
-        h = int(p[i][0]) - 65;
-        c = int(p[i][1]) - 49;
-        cout << h << " " << c << endl;
-        if (p[i].length() == 3)
-            c = 9;
-        x.update(n, h, c);
-    }
+	cout << "\t\t\t\t+====================================================+" << endl;
+	
 }
 
+void guest::update(string phim,int n) {
 
-//PHIM3 
-void guest::getInfo3(int t, room &x) {
+	fstream g;
+	g.open("khach.txt");
+	n = n % 4;
+	if (n == 0)
+		n = 4;
 
-    cout << "\t\t" << "Black Adam   " << endl;
-    cout << "\t\t+=============================================================+" << endl;
-    cout << "\t\t|               ** LICH CHIEU TRONG NGAY **                   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << "\t\t|    Gio Bat Dau       |    So Ghe Trong      |    Ma Phong   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << setw(30) << "9h" << setw(22) << x.count(3) << setw(20) << "R3" << endl;
-    cout << setw(30) << "11h" << setw(22) << x.count(6) << setw(20) << "R2" << endl;
-    cout << setw(30) << "15h" << setw(22) << x.count(9) << setw(20) << "R1" << endl;
-    cout << "\t\tHo Ten Khach Hang: ";
-    cin.ignore();
-    getline(cin, name);
-    cout << "\t\tSo dien thoai: ";
-    getline(cin, phone);
-    cout << "\t\tNhap suat xem: ";
-    getline(cin, time);
-    cout << "\t\tNhap so ve muon mua ";
-    cin >> num;
-    int n;
-    if (time == "9h") {
-        n = 1;
-        x.show(3);
-    }
-    if (time == "11h") {
-        n = 2;
-        x.show(6);
-    }
-    if (time == "15h") {
-        n = 3;
-        x.show(9);
-    }
+	g << name << "|" << phone << "|" << phim << "|" << n << "|" << num << "|";
+	for (int i = 0; i < num-1; i++) {
+		g << vt[i] <<"|";
+	}
+	g << vt[num - 1] << endl; 
 
-    //x.show(n);
-    for (int i = 0; i < num; i++) {
-        cout << "\t\t\tNhap vi tri cho ngoi thu " << i + 1 << ": ";
-
-        if (i == 0) cin.ignore();
-        else fflush(stdin);
-        getline(cin, p[i]);
-
-        p[i][0] = toupper(p[i][0]);
-        h = int(p[i][0]) - 65;
-        c = int(p[i][1]) - 49;
-        cout << h << " " << c << endl;
-        if (p[i].length() == 3)
-            c = 9;
-        x.update(n, h, c);
-    }
+	// name|phone|phim|rap|num|vt[i] \n
+	g.close();
 }
 
-
-// PHIM 4
-void guest::getInfo4(int t, room &x) {
-
-    cout << "\t\t" << "Quai Vat Song Mekong   " << endl;
-    cout << "\t\t+=============================================================+" << endl;
-    cout << "\t\t|               ** LICH CHIEU TRONG NGAY **                   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << "\t\t|    Gio Bat Dau       |    So Ghe Trong      |    Ma Phong   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << setw(30) << "9h" << setw(22) << x.count(4) << setw(20) << "R4" << endl;
-    cout << setw(30) << "11h" << setw(22) << x.count(7) << setw(20) << "R3" << endl;
-    cout << setw(30) << "15h" << setw(22) << x.count(10) << setw(20) << "R2" << endl;
-    cout << setw(30) << "18h" << setw(22) << x.count(13) << setw(20) << "R1" << endl;
-    cout << "\t\tHo Ten Khach Hang: ";
-    cin.ignore();
-    getline(cin, name);
-    cout << "\t\tSo dien thoai: ";
-    getline(cin, phone);
-    cout << "\t\tNhap suat xem: ";
-    getline(cin, time);
-    cout << "\t\tNhap so ve muon mua ";
-    cin >> num;
-    int n;
-    if (time == "9h") {
-        n = 1;
-        x.show(4);
-    }
-    if (time == "11h") {
-        n = 2;
-        x.show(7);
-    }
-    if (time == "15h") {
-        n = 3;
-        x.show(10);
-    }
-    if (time == "18h") {
-        n = 4;
-        x.show(13);
-    }
-
-    //x.show(n);
-    for (int i = 0; i < num; i++) {
-        cout << "\t\t\tNhap vi tri cho ngoi thu " << i + 1 << ": ";
-
-        if (i == 0) cin.ignore();
-        else fflush(stdin);
-        getline(cin, p[i]);
-
-        p[i][0] = toupper(p[i][0]);
-        h = int(p[i][0]) - 65;
-        c = int(p[i][1]) - 49;
-        cout << h << " " << c << endl;
-        if (p[i].length() == 3)
-            c = 9;
-        x.update(n, h, c);
-    }
+bool guest:: checkFull() {
+	return false;
+}
+bool guest:: checkEmpty() {
+	return false;
 }
 
-//PHIM5
-void guest::getInfo5(int t, room &x) {
-
-    cout << "\t\t" << "Co Gai Tu Qua Khu     " << endl;
-    cout << "\t\t+=============================================================+" << endl;
-    cout << "\t\t|               ** LICH CHIEU TRONG NGAY **                   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << "\t\t|    Gio Bat Dau       |    So Ghe Trong      |    Ma Phong   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << setw(30) << "11h" << setw(22) << x.count(8) << setw(20) << "R4" << endl;
-    cout << setw(30) << "15h" << setw(22) << x.count(11) << setw(20) << "R3" << endl;
-    cout << setw(30) << "18h" << setw(22) << x.count(14) << setw(20) << "R2" << endl;
-    cout << setw(30) << "21h" << setw(22) << x.count(17) << setw(20) << "R1" << endl;
-    cout << "\t\tHo Ten Khach Hang: ";
-    cin.ignore();
-    getline(cin, name);
-    cout << "\t\tSo dien thoai: ";
-    getline(cin, phone);
-    cout << "\t\tNhap suat xem: ";
-    getline(cin, time);
-    cout << "\t\tNhap so ve muon mua ";
-    cin >> num;
-    int n;
-    if (time == "11h") {
-        n = 1;
-        x.show(8);
-    }
-    if (time == "15h") {
-        n = 2;
-        x.show(11);
-    }
-    if (time == "18h") {
-        n = 3;
-        x.show(14);
-    }
-    if (time == "21h") {
-        n = 4;
-        x.show(17);
-    }
-    //x.show(n);
-    for (int i = 0; i < num; i++) {
-        cout << "\t\t\tNhap vi tri cho ngoi thu " << i + 1 << ": ";
-
-        if (i == 0) cin.ignore();
-        else fflush(stdin);
-        getline(cin, p[i]);
-
-        p[i][0] = toupper(p[i][0]);
-        h = int(p[i][0]) - 65;
-        c = int(p[i][1]) - 49;
-        cout << h << " " << c << endl;
-        if (p[i].length() == 3)
-            c = 9;
-        x.update(n, h, c);
-    }
-}
-
-
-//PHIM6
-void guest::getInfo6(int t, room &x) {
-
-    cout << "\t\t" << "Mon Phai Vo Meo     " << endl;
-    cout << "\t\t+=============================================================+" << endl;
-    cout << "\t\t|               ** LICH CHIEU TRONG NGAY **                   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << "\t\t|    Gio Bat Dau       |    So Ghe Trong      |    Ma Phong   |" << endl;
-    cout << "\t\t+======================+======================+===============+" << endl;
-    cout << setw(30) << "15h" << setw(22) << x.count(12) << setw(20) << "R4" << endl;
-    cout << setw(30) << "18h" << setw(22) << x.count(15) << setw(20) << "R3" << endl;
-    cout << setw(30) << "21h" << setw(22) << x.count(18) << setw(20) << "R2" << endl;
-    cout << "\t\tHo Ten Khach Hang: ";
-    cin.ignore();
-    getline(cin, name);
-    cout << "\t\tSo dien thoai: ";
-    getline(cin, phone);
-    cout << "\t\tNhap suat xem: ";
-    getline(cin, time);
-    cout << "\t\tNhap so ve muon mua ";
-    cin >> num;
-    int n;
-    if (time == "15h") {
-        n = 1;
-        x.show(12);
-    }
-    if (time == "18h") {
-        n = 2;
-        x.show(15);
-    }
-    if (time == "21h") {
-        n = 3;
-        x.show(18);
-    }
-
-    //x.show(n);
-    for (int i = 0; i < num; i++) {
-        cout << "\t\t\tNhap vi tri cho ngoi thu " << i + 1 << ": ";
-
-        if (i == 0) cin.ignore();
-        else fflush(stdin);
-        getline(cin, p[i]);
-
-        p[i][0] = toupper(p[i][0]);
-        h = int(p[i][0]) - 65;
-        c = int(p[i][1]) - 49;
-        cout << h << " " << c << endl;
-        if (p[i].length() == 3)
-            c = 9;
-        x.update(n, h, c);
-    }
-    
-}
-
-
-void guest::bill() {
-    
-}

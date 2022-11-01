@@ -1,0 +1,5 @@
+mv1|Gulliver Du ky|90 phut|phieu luu, hoat hinh
+mv2|Black Adam|125 phut|hanh dong
+mv3|Vu an ki bi|118 phut|kich tinh, lich su
+mv4|Chien binh bao den|130 phut|hanh dong, sieu anh hung
+mv5|One Piece Film Red|115 phut|hanh dong, hoat hinh

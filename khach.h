@@ -1,26 +1,23 @@
 #ifndef KHACH_H
 #define KHACH_H
-#include "room.h"
+#include "film.h"
 #include <string>
 using namespace std;
 class guest {
 private:
 	int num,h,c;
-	string p[100];
-	string name,phone,time;
+	string vt[100];
+	string ma,name,phone,time;
 
 public: 
 	guest();
 	~guest();
-	void getInfo1(int t, room &x);
-	void getInfo2(int t, room &x);
-	void getInfo3(int t, room &x);
-	void getInfo4(int t, room &x);
-	void getInfo5(int t, room &x);
-	void getInfo6(int t, room &x);
-	void bill();
-	//void select();
-	void update();
+	void bill(string, int);
+	void getInfo(film f,room & x);
+	bool checkFull();
+	bool checkEmpty();
+	void update(string ,int );
 	friend class room;
+	friend class film;
 };
 #endif // !KHACH_H
