@@ -10,11 +10,17 @@ room x;
 film f;
 int n;
 
-void banve() {
+
+void muavexemphim() {
     f.dsphim();
-    fstream g;
     guest k;
-    k.getInfo(f,x);
+    k.muave(f,x);
+    system("pause");
+}
+
+void huyve() {
+    guest k;
+    k.huyve();
     system("pause");
 }
 
@@ -49,7 +55,10 @@ void khachhang() {
             system("pause");
             break;
         case 3:
-            banve();
+            muavexemphim();
+            break;
+        case 4:
+            huyve();
             break;
         }
     }
@@ -74,6 +83,7 @@ int main()
         
         nhap:
         system("cls");
+        
         //cout << f.getData() << endl;
         n = f.getData();
         cout << "\t\t\tNHAP LUA CHON CUA BAN: " << endl;
@@ -105,7 +115,7 @@ int main()
     } while (stop == 'Y');
 
     cout << endl;
-    cout << "\t\t______________________________________CHUONG TRINH BAN VE XEM PHIM KET THUC______________________________________________" << endl;
+    cout << "\t\t______________________CHUONG TRINH BAN VE XEM PHIM KET THUC______________________" << endl;
 
     
     return 0;

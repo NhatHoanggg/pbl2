@@ -63,3 +63,8 @@ void room::update(int n, int h, int c) {
 	this->r[n-1][h][c] = 1;
 }
 
+bool room::checkEmpty(int n, int h, int c) {
+	if (r[n - 1][h][c] == 1)
+		return false;
+	return true;
+}

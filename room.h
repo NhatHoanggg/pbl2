@@ -13,7 +13,10 @@ public:
 	void setData();
 	void update(int ,int ,int);
 	void show(int);
-	//bool check(int , int, int);
+	
+	bool checkFull();
+	bool checkEmpty(int, int, int);
+
 	int count(string, string);
 };
 

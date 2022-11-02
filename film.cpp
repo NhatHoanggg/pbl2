@@ -78,3 +78,10 @@ void film::dstrongngay() {
 	cout << "\t\t\t+=============+=======================================+==========+" << endl;
 	g.close();
 }
+
+bool film::checkMa(string s) {
+	for (int i = 0; i < 10; i++)
+		if (ma[i] == s)
+			return true;
+	return false;
+}

@@ -16,6 +16,7 @@ public:
 	void dstrongngay();
 	int getData();
 	void update();
-	string find(string m);
+	string find(string);
+	bool checkMa(string);
 };
 #endif 
